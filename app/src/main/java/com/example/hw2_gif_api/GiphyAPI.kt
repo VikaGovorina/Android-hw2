@@ -19,7 +19,6 @@ interface GiphyAPI {
 data class Gifs(
     val data: List<GifData>
 )
-//    val pagination: Pagination
 
 @Serializable
 data class GifData(
@@ -38,9 +37,3 @@ data class Original(
     val width: String,
     val height: String
 )
-
-//data class Pagination(
-//    val total_count: Int,
-//    val count: Int,
-//    val offset: Int
-//)

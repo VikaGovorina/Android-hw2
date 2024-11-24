@@ -146,89 +146,13 @@ class MainActivity : ComponentActivity() {
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(
-                                text = "No connection. Retry.",
+                                text = getString(R.string.retry),
                                 style = MaterialTheme.typography.bodyLarge,
                                 textAlign = TextAlign.Center
                             )
                         }
                     }
 
-
-//                    Box(modifier = Modifier.fillMaxSize().weight(1f), contentAlignment = Alignment.Center) {
-//                        Column{
-//                            Box (modifier = Modifier.clickable(onClick = {
-//                                scope.launch(handler) {
-//                                    state = State.Loading
-//                                    try {
-//                                        val result = retrofitController.requestGifs(offset)
-//                                        if (result is State.Ok) {
-//                                            gifs.addAll(result.gifs.data)
-//                                            offset += 20
-//                                        }
-//                                        state = result
-//                                    } catch (e: Exception) {
-//                                        state = State.Error(e.message.toString())
-//                                    }
-//                                }
-//
-//                            })) {
-//                                Icon(
-//                                    imageVector = Icons.Default.Refresh,
-//                                    contentDescription = "error occured",
-//                                    tint = Color.Red,
-//                                    modifier = Modifier.size(30.dp)
-//                                )
-//                            }
-//                        }
-//                    }
-
-
-//                    val message = (state as State.Error).error
-//                    Box(
-//                        Modifier.fillMaxSize(),
-//                        contentAlignment = Alignment.Center
-//                    ) {
-//                        Column(horizontalAlignment = Alignment.CenterHorizontally) {
-//                            Text("Error: $message")
-//                            Button(onClick = {
-//                                scope.launch {
-//                                    state = State.Loading
-//                                    try {
-//                                        val result = retrofitController.requestGifs(offset)
-//                                        if (result is State.Ok) {
-//                                            gifs.addAll(result.gifs.data)
-//                                            offset += 20
-//                                        }
-//                                        state = result
-//                                    } catch (e: Exception) {
-//                                        state = State.Error(e.message.toString())
-//                                    }
-//                                }
-//                            }) {
-//                                Text("Retry")
-//                            }
-//                        }
-//                    }
-
-//                    Box(
-//                        Modifier.fillMaxWidth().padding(16.dp),
-//                        contentAlignment = Alignment.Center
-//                    ) {
-//                        CircularProgressIndicator()
-//                        Button(onClick = {
-//                            scope.launch {
-//                                state = State.Loading
-//                                val result = retrofitController.requestGifs(offset)
-//                                if (result is State.Ok) {
-//                                    gifs.addAll(result.gifs.data)
-//                                    offset += 20
-//                                }
-//                                state = result
-//                            }
-//                        }) {
-//                            Text("Error! Try again")
-//                        }
-//                    }
                 }
 
                 is State.Ok -> {
@@ -239,69 +163,12 @@ class MainActivity : ComponentActivity() {
                             items(gifs) { gif ->
                                 GifItem(gif)
                             }
-//                            item {
-//                                Box(
-//                                    Modifier
-//                                        .fillMaxWidth()
-//                                        .padding(16.dp),
-//                                    contentAlignment = Alignment.Center
-//                                ) {
-//                                    CircularProgressIndicator()
-//                                    Button(onClick = {
-//                                        scope.launch(handler) {
-//                                            state = State.Loading
-//                                            try {
-//                                                val result = retrofitController.requestGifs(offset)
-//                                                if (result is State.Ok) {
-//                                                    gifs.addAll(result.gifs.data)
-//                                                    offset += 20
-//                                                }
-//                                                state = result
-//                                            } catch (e: Exception) {
-//                                                state = State.Error(e.message.toString())
-//                                            }
-//                                        }
-//                                    }) {
-//                                        Text("Load Gifs!")
-//                                    }
-//                                }
-//                            }
-
-
                         }
                     } else {
                         LazyColumn {
                             items(gifs) { gif ->
                                 GifItem(gif)
                             }
-//                            item {
-//                                Box(
-//                                    Modifier
-//                                        .fillMaxWidth()
-//                                        .padding(16.dp),
-//                                    contentAlignment = Alignment.Center
-//                                ) {
-//                                    CircularProgressIndicator()
-//                                    Button(onClick = {
-//                                        scope.launch(handler) {
-//                                            state = State.Loading
-//                                            try {
-//                                                val result = retrofitController.requestGifs(offset)
-//                                                if (result is State.Ok) {
-//                                                    gifs.addAll(result.gifs.data)
-//                                                    offset += 20
-//                                                }
-//                                                state = result
-//                                            } catch (e: Exception) {
-//                                                state = State.Error(e.message.toString())
-//                                            }
-//                                        }
-//                                    }) {
-//                                        Text("Load Gifs!")
-//                                    }
-//                                }
-//                            }
-
 
                         }
                     }
@@ -341,16 +208,3 @@ class MainActivity : ComponentActivity() {
     }
 
 }
-
-
-
-
-
-//        LaunchedEffect(offset) {
-//            state = State.Loading
-//            val result = retrofitController.requestGifs(offset)
-//            if (result is State.Ok) {
-//                gifs.addAll(result.gifs.data)
-//            }
-//            state = result
-//        }

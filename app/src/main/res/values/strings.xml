@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">HW2_GIF_api</string>
+    <string name="retry">No connection. Retry.</string>
 </resources>

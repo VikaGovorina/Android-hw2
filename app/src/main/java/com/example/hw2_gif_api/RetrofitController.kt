@@ -5,17 +5,6 @@ import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
 
-//import kotlinx.serialization.json.Json
-//import retrofit2.Retrofit
-
-//interface RequestController {
-//    suspend fun requestGifs(limit: Int, offset: Int): Result
-//}
-//
-//sealed interface Result {
-//    data class Ok(val gifs: Gifs) : Result
-//    data class Error(val error: String) : Result
-//}
 
 sealed class State {
     object Loading : State()
