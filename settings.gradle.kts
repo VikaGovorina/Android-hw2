@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "HW2_GIF_api"
 include(":app")
+include(":app")
  

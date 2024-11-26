@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.*
@@ -73,7 +74,6 @@ class MainActivity : ComponentActivity() {
 
         val scope = rememberCoroutineScope()
         var state by remember { mutableStateOf<State>(State.Ok(Gifs(data = emptyList()))) }
-//        var state by remember { mutableStateOf<State>(State.Error("")) }
         var offset by rememberSaveable { mutableIntStateOf(0) }
         var gifs = rememberSaveable(saver = gifSaver) { mutableStateListOf<GifData>() }
         val handler = CoroutineExceptionHandler { _, exception ->
@@ -87,7 +87,11 @@ class MainActivity : ComponentActivity() {
                 try {
                     val result = retrofitController.requestGifs(newOffset)
                     if (result is State.Ok) {
-                        gifs.addAll(result.gifs.data)
+                        val newGifs = result.gifs.data.filterNot { existingGif ->
+                            gifs.any { it.id == existingGif.id }
+                        }
+                        gifs.addAll(newGifs)
+//                        gifs.addAll(result.gifs.data)
                         offset += 20
                     }
                     state = result
@@ -157,8 +161,9 @@ class MainActivity : ComponentActivity() {
 
                 is State.Ok -> {
                     if (LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+
                         LazyVerticalGrid (
-                            columns = GridCells.Fixed(4)
+                            columns = GridCells.Fixed(4),
                         ) {
                             items(gifs) { gif ->
                                 GifItem(gif)
@@ -174,7 +179,25 @@ class MainActivity : ComponentActivity() {
                     }
                 }
             }
+            if (state is State.Ok) {
+                val listState = rememberLazyListState()
+                LazyColumn(
+                    state = listState,
+                    contentPadding = PaddingValues(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    items(gifs) { gif ->
+                        GifItem(gif)
+                    }
+                }
 
+                LaunchedEffect(listState.firstVisibleItemIndex) {
+                    val lastVisibleItem = listState.layoutInfo.visibleItemsInfo.lastOrNull()
+                    if (lastVisibleItem != null && lastVisibleItem.index == gifs.size - 1) {
+                        loadGifs(offset)
+                    }
+                }
+            }
 
 
         }
